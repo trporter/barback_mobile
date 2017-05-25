@@ -1,4 +1,5 @@
 
+import "./cocktails"
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -25,17 +26,16 @@ class CocktailScreen extends Component{
   static navigationOptions = ({ navigation }) => {
     const {state, setParams} = navigation;
     const isInfo = state.params.mode === 'info';
-    const {user} = state.params;
+    const {cocktail} = state.params;
     return {
-      title: isInfo ? "Rachael's Contact Info" : 'Chat with Rachael',
-      headerTintColor: 'red',
+      title: isInfo ? "Cocktail Info" : cocktail,
     };
   };
   render() {
     const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>Chat with {params.user}</Text>
+        <Text>Details on {params.cocktail}</Text>
       </View>
     );
   }
@@ -51,6 +51,10 @@ class AllCocktailsScreen extends Component{
         'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin',
       ]),
     };
+    this.onPressButton = this.onPressButton.bind(this);
+  }
+  onPressButton(){
+    this.props.navigation.navigate('CocktailDetail', { cocktail: 'Whiskey' })
   }
   render(){
     const { navigate } = this.props.navigation;
@@ -63,18 +67,18 @@ class AllCocktailsScreen extends Component{
             placeholderTextColor= 'black'
           />
         </View>
-        <TouchableHighlight onPress = {this._onPressButton}>
           <ListView
             dataSource = {this.state.dataSource}
             renderRow = {(rowData) =>
-              <View style = {styles.row}>
-                <Text style = {styles.text}>
-                  {rowData}
-                </Text>
-              </View>
+              <TouchableHighlight onPress = {this.onPressButton}>
+                <View style = {styles.row}>
+                  <Text style = {styles.text}>
+                    {rowData}
+                  </Text>
+                </View>
+              </TouchableHighlight>
             }
           />
-        </TouchableHighlight>
       </View>
     );
   }
@@ -142,7 +146,7 @@ MainScreenNavigator.navigationOptions = {
 
 const SimpleApp = StackNavigator({
   Home: { screen: MainScreenNavigator },
-  Chat: { screen: CocktailScreen },
+  CocktailDetail: { screen: CocktailScreen },
 });
 
 AppRegistry.registerComponent('Barback_mobile', () => SimpleApp);
