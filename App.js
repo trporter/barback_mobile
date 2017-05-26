@@ -1,5 +1,8 @@
 
-import "./cocktails"
+import {
+  cocktailList,
+  Row,
+} from './cocktails.js';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -46,9 +49,8 @@ class AllCocktailsScreen extends Component{
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2});
     this.state = {
-      text: '',
       dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin',
+        cocktailList
       ]),
     };
     this.onPressButton = this.onPressButton.bind(this);
@@ -67,18 +69,12 @@ class AllCocktailsScreen extends Component{
             placeholderTextColor= 'black'
           />
         </View>
-          <ListView
-            dataSource = {this.state.dataSource}
-            renderRow = {(rowData) =>
-              <TouchableHighlight onPress = {this.onPressButton}>
-                <View style = {styles.row}>
-                  <Text style = {styles.text}>
-                    {rowData}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            }
-          />
+        <ListView
+          dataSource = {this.state.dataSource}
+          renderRow = {(rowData) =>
+            <Row {...rowData}/>
+          }
+        />
       </View>
     );
   }
@@ -100,7 +96,7 @@ class YourCocktailsScreen extends Component{
             color="black"
           />
         </View>
-        <Text style = {{paddingTop: 20,}}>List of your cocktails</Text>
+        <Text style = {{paddingTop: 20}}>List of your cocktails</Text>
       </View>
     );
   }
