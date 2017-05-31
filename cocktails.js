@@ -27,15 +27,17 @@ var oldFashioned2 = new Cocktail(
   ["muddle all but bourbon and cherry", "remove rind", "garnish"]
 );
 
-const Row = (props) => (
-  <TouchableHighlight onPress = {this.onPressButton}>
-    <View style = {styles.row}>
-      <Text style = {styles.text}>
-        {`${props.name}`}
-      </Text>
-    </View>
-  </TouchableHighlight>
-);
-
-export default Row;
 export {cocktailList};
+
+/*
+<List>
+  <FlatList
+    data = {this.state.dataSource}
+    renderItem = {({ item }) => (
+      <ListItem
+        title= {`${item.name}`}
+      />
+    )}
+  />
+</List>
+*/

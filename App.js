@@ -1,7 +1,6 @@
 
 import {
   cocktailList,
-  Row,
 } from './cocktails.js';
 import React, { Component } from 'react';
 import {
@@ -9,9 +8,12 @@ import {
   Text,
   Button,
   View,
+  Picker,
   StyleSheet,
   TextInput,
+  List,
   ListView,
+  FlatList,
   TouchableHighlight,
 } from 'react-native';
 import {
@@ -69,12 +71,6 @@ class AllCocktailsScreen extends Component{
             placeholderTextColor= 'black'
           />
         </View>
-        <ListView
-          dataSource = {this.state.dataSource}
-          renderRow = {(rowData) =>
-            <Row {...rowData}/>
-          }
-        />
       </View>
     );
   }
@@ -89,9 +85,10 @@ class YourCocktailsScreen extends Component{
           <TextInput
           style={{height: 20}}
             placeholder="Search"
-            placeholderTextColor= 'black'
+            placeholderTextColor='black'
           />
           <Button
+            onPress = {() => navigate('CreateCocktail')}
             title="Create"
             color="black"
           />
@@ -102,12 +99,46 @@ class YourCocktailsScreen extends Component{
   }
 }
 
+class CocktailCreatorScreen extends Component{
+  state = {
+    types: [],
+    color: 'blue',
+    mode: Picker.MODE_DIALOG,
+  };
+  render(){
+    return(
+      <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'red' }}>
+        <Text style = {styles.createText}>Name your Cocktail</Text>
+        <TextInput
+          style={{height: 15, padding: 10}}
+          placeholder="Name"
+          placeholderTextColor='black'
+          backgroundColor='white'
+        />
+        <Text style = {styles.createText}>What family?</Text>
+        <Picker
+        style={{backgroundColor: 'white'}}
+          selectedValue={this.state.types}
+          onValueChange={(type) => this.setState({types: type})}>
+          <Picker.Item label="whiskey" value="key0" />
+          <Picker.Item label="vodka" value="key1" />
+          <Picker.Item label="gin" value="key2" />
+          <Picker.Item label="rum" value="key3" />
+          <Picker.Item label="other" value="key4" />
+        </Picker>
+        <Text style = {styles.createText}>List the ingredients</Text>
+        <Text style = {styles.createText}>Steps in your recipe</Text>
+      </View>
+    );
+  }
+}
+
 const MainScreenNavigator = TabNavigator({
   "All Cocktails": {
     screen: AllCocktailsScreen
   },
   "Your Cocktails": {
-     screen: YourCocktailsScreen
+    screen: YourCocktailsScreen
   },
 }, {
   tabBarOptions: {
@@ -133,6 +164,10 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
   },
+  createText: {
+    justifyContent: 'center',
+    padding: 10,
+  }
 });
 
 //figure out how to style the header!!!
@@ -143,6 +178,7 @@ MainScreenNavigator.navigationOptions = {
 const SimpleApp = StackNavigator({
   Home: { screen: MainScreenNavigator },
   CocktailDetail: { screen: CocktailScreen },
+  CreateCocktail: { screen: CocktailCreatorScreen },
 });
 
 AppRegistry.registerComponent('Barback_mobile', () => SimpleApp);
