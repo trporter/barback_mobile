@@ -63,7 +63,7 @@ class AllCocktailsScreen extends Component{
   render(){
     const { navigate } = this.props.navigation;
     return (
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'red' }}>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <View style={{backgroundColor: 'white', padding: 10}}>
           <TextInput
             style={{height: 20}}
@@ -80,7 +80,7 @@ class YourCocktailsScreen extends Component{
   render(){
     const { navigate } = this.props.navigation;
     return(
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'red' }}>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <View style={{backgroundColor: 'white', padding: 10}}>
           <TextInput
           style={{height: 20}}
@@ -102,12 +102,23 @@ class YourCocktailsScreen extends Component{
 class CocktailCreatorScreen extends Component{
   state = {
     types: [],
-    color: 'blue',
     mode: Picker.MODE_DIALOG,
   };
   render(){
+    const addIngredient = () => {
+
+    };
+    const addStep = () => {
+
+    };
+    const removeIngredient = () => {
+
+    };
+    const removeStep = () => {
+
+    };
     return(
-      <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'red' }}>
+      <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <Text style = {styles.createText}>Name your Cocktail</Text>
         <TextInput
           style={{height: 15, padding: 10}}
@@ -117,7 +128,7 @@ class CocktailCreatorScreen extends Component{
         />
         <Text style = {styles.createText}>What family?</Text>
         <Picker
-        style={{backgroundColor: 'white'}}
+          style={{backgroundColor: 'white'}}
           selectedValue={this.state.types}
           onValueChange={(type) => this.setState({types: type})}>
           <Picker.Item label="whiskey" value="key0" />
@@ -127,13 +138,57 @@ class CocktailCreatorScreen extends Component{
           <Picker.Item label="other" value="key4" />
         </Picker>
         <Text style = {styles.createText}>List the ingredients</Text>
+        <TextInput
+          style={{height: 15, padding: 10}}
+          placeholder="Add ingredient"
+          placeholderTextColor='black'
+          backgroundColor='white'
+          borderBottomColor = 'black'
+        />
+        <View style={{flex: .25, flexDirection: 'row'}}>
+          <Button
+            onPress = {addIngredient}
+            title="+"
+            color="black"
+          />
+          <Button
+            onPress = {removeIngredient}
+            title="-"
+            color="black"
+          />
+        </View>
         <Text style = {styles.createText}>Steps in your recipe</Text>
+        <TextInput
+          style={{height: 15, padding: 10}}
+          placeholder="Add ingredient"
+          placeholderTextColor='black'
+          backgroundColor='white'
+          borderBottomColor = 'black'
+        />
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Button
+            onPress = {addStep}
+            title="+"
+            color="black"
+          />
+          <Button
+            onPress = {removeStep}
+            title="-"
+            color="black"
+          />
+        </View>
+        <Button
+          onPress = {removeStep}
+          title="Finish"
+          color="black"
+        />
       </View>
     );
   }
 }
 
 const MainScreenNavigator = TabNavigator({
+  //tabs at bottom
   "All Cocktails": {
     screen: AllCocktailsScreen
   },
