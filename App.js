@@ -117,8 +117,10 @@ class CocktailCreatorScreen extends Component{
   constructor() {
     super();
     this.state = {
-      textIngNumber: 1,
-      textStepNumber: 1,
+      textIngNumber: 0,
+      ingredients: [],
+      textStepNumber: 0,
+      steps: [],
       types: [],
       mode: Picker.MODE_DIALOG,
     };
@@ -126,15 +128,35 @@ class CocktailCreatorScreen extends Component{
   render(){
     const addIng = () => {
       this.setState({ textIngNumber: this.state.textIngNumber += 1});
+      this.state.ingredients.push(
+        <TextInput
+        key = {this.state.textIngNumber}
+          style={{height: 20}}
+          placeholder="Add ingredient"
+          placeholderTextColor='black'
+          backgroundColor='white'
+        />
+      )
     }
     const removeIng = () => {
       this.setState({ textIngNumber: this.state.textIngNumber -= 1});
+      this.state.ingredients.pop();
     }
     const addStep = () => {
       this.setState({ textStepNumber: this.state.textStepNumber += 1});
+      this.state.steps.push(
+        <TextInput
+        key = {this.state.textStepNumber}
+          style={{height: 20}}
+          placeholder="Add Step"
+          placeholderTextColor='black'
+          backgroundColor='white'
+        />
+      )
     }
     const removeStep = () => {
       this.setState({ textStepNumber: this.state.textStepNumber -= 1});
+      this.state.steps.pop();
     }
     return(
       <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
@@ -163,6 +185,7 @@ class CocktailCreatorScreen extends Component{
           placeholderTextColor='black'
           backgroundColor='white'
         />
+        {this.state.ingredients}
         <View style={{flex: .25, flexDirection: 'row'}}>
           <Button
             onPress = {addIng}
@@ -182,6 +205,7 @@ class CocktailCreatorScreen extends Component{
           placeholderTextColor='black'
           backgroundColor='white'
         />
+        {this.state.steps}
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Button
             onPress = {addStep}
