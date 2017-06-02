@@ -1,8 +1,10 @@
 
 import {
   cocktailList,
+  yourCocktailList,
 } from './cocktails.js';
 import React, { Component } from 'react';
+import { styles } from './styles.js';
 import {
   AppRegistry,
   Text,
@@ -77,6 +79,15 @@ class AllCocktailsScreen extends Component{
 }
 
 class YourCocktailsScreen extends Component{
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        yourCocktailList
+      ]),
+    };
+  }
   render(){
     const { navigate } = this.props.navigation;
     return(
@@ -93,7 +104,10 @@ class YourCocktailsScreen extends Component{
             color="black"
           />
         </View>
-        <Text style = {{paddingTop: 20}}>List of your cocktails</Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData}</Text>}
+        />
       </View>
     );
   }
@@ -121,7 +135,7 @@ class CocktailCreatorScreen extends Component{
       <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <Text style = {styles.createText}>Name your Cocktail</Text>
         <TextInput
-          style={{height: 15, padding: 10}}
+          style={{height: 20}}
           placeholder="Name"
           placeholderTextColor='black'
           backgroundColor='white'
@@ -139,11 +153,10 @@ class CocktailCreatorScreen extends Component{
         </Picker>
         <Text style = {styles.createText}>List the ingredients</Text>
         <TextInput
-          style={{height: 15, padding: 10}}
+          style={{height: 20}}
           placeholder="Add ingredient"
           placeholderTextColor='black'
           backgroundColor='white'
-          borderBottomColor = 'black'
         />
         <View style={{flex: .25, flexDirection: 'row'}}>
           <Button
@@ -159,11 +172,10 @@ class CocktailCreatorScreen extends Component{
         </View>
         <Text style = {styles.createText}>Steps in your recipe</Text>
         <TextInput
-          style={{height: 15, padding: 10}}
-          placeholder="Add ingredient"
+          style={{height: 20}}
+          placeholder="Add step"
           placeholderTextColor='black'
           backgroundColor='white'
-          borderBottomColor = 'black'
         />
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Button
@@ -207,22 +219,6 @@ const MainScreenNavigator = TabNavigator({
       backgroundColor: 'black',
     },
   },
-});
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#F6F6F6',
-  },
-  text: {
-    flex: 1,
-  },
-  createText: {
-    justifyContent: 'center',
-    padding: 10,
-  }
 });
 
 //figure out how to style the header!!!
