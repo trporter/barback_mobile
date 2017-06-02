@@ -114,23 +114,28 @@ class YourCocktailsScreen extends Component{
 }
 
 class CocktailCreatorScreen extends Component{
-  state = {
-    types: [],
-    mode: Picker.MODE_DIALOG,
-  };
+  constructor() {
+    super();
+    this.state = {
+      textIngNumber: 1,
+      textStepNumber: 1,
+      types: [],
+      mode: Picker.MODE_DIALOG,
+    };
+  }
   render(){
-    const addIngredient = () => {
-
-    };
+    const addIng = () => {
+      this.setState({ textIngNumber: this.state.textIngNumber += 1});
+    }
+    const removeIng = () => {
+      this.setState({ textIngNumber: this.state.textIngNumber -= 1});
+    }
     const addStep = () => {
-
-    };
-    const removeIngredient = () => {
-
-    };
+      this.setState({ textStepNumber: this.state.textStepNumber += 1});
+    }
     const removeStep = () => {
-
-    };
+      this.setState({ textStepNumber: this.state.textStepNumber -= 1});
+    }
     return(
       <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <Text style = {styles.createText}>Name your Cocktail</Text>
@@ -160,12 +165,12 @@ class CocktailCreatorScreen extends Component{
         />
         <View style={{flex: .25, flexDirection: 'row'}}>
           <Button
-            onPress = {addIngredient}
+            onPress = {addIng}
             title="+"
             color="black"
           />
           <Button
-            onPress = {removeIngredient}
+            onPress = {removeIng}
             title="-"
             color="black"
           />
@@ -190,7 +195,6 @@ class CocktailCreatorScreen extends Component{
           />
         </View>
         <Button
-          onPress = {removeStep}
           title="Finish"
           color="black"
         />
