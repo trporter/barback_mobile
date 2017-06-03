@@ -1,6 +1,7 @@
 
 var cocktailList = [];
 var yourCocktailList = [];
+var cocktailnames = [];
 
 //function for creating your own cocktail in app
 function Cocktail(photo, type, name, ing, steps){
@@ -10,6 +11,7 @@ function Cocktail(photo, type, name, ing, steps){
   this.ing = ing;
   this.steps = steps;
   cocktailList.push(this);
+  cocktailnames.push(name)
 
 };
 
@@ -31,7 +33,7 @@ var oldFashioned2 = new Cocktail(
 
 export {cocktailList};
 export {yourCocktailList};
-
+export {cocktailnames};
 /*
 <List>
   <FlatList

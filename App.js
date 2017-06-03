@@ -2,6 +2,7 @@
 import {
   cocktailList,
   yourCocktailList,
+  cocktailnames,
 } from './cocktails.js';
 import React, { Component } from 'react';
 import { styles } from './styles.js';
@@ -51,19 +52,16 @@ class CocktailScreen extends Component{
 class AllCocktailsScreen extends Component{
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([
-        cocktailList
-      ]),
-    };
-    this.onPressButton = this.onPressButton.bind(this);
-  }
-  onPressButton(){
-    this.props.navigation.navigate('CocktailDetail', { cocktail: 'Whiskey' })
   }
   render(){
+    const onPressRow = () => {
+      this.props.navigation.navigate('CocktailDetail', { cocktail: 'Whiskey' })
+    }
     const { navigate } = this.props.navigation;
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(cocktailnames),
+    };
     return (
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <View style={{backgroundColor: 'white', padding: 10}}>
@@ -73,6 +71,14 @@ class AllCocktailsScreen extends Component{
             placeholderTextColor= 'black'
           />
         </View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) =>
+            <TouchableHighlight onPress={onPressRow}>
+              <Text>{rowData}</Text>
+            </TouchableHighlight>
+          }
+        />
       </View>
     );
   }
@@ -130,7 +136,7 @@ class CocktailCreatorScreen extends Component{
       this.setState({ textIngNumber: this.state.textIngNumber += 1});
       this.state.ingredients.push(
         <TextInput
-        key = {this.state.textIngNumber}
+          key = {this.state.textIngNumber}
           style={{height: 20}}
           placeholder="Add ingredient"
           placeholderTextColor='black'
@@ -146,7 +152,7 @@ class CocktailCreatorScreen extends Component{
       this.setState({ textStepNumber: this.state.textStepNumber += 1});
       this.state.steps.push(
         <TextInput
-        key = {this.state.textStepNumber}
+          key = {this.state.textStepNumber}
           style={{height: 20}}
           placeholder="Add Step"
           placeholderTextColor='black'
@@ -159,7 +165,7 @@ class CocktailCreatorScreen extends Component{
       this.state.steps.pop();
     }
     return(
-      <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
+      <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal'}}>
         <Text style = {styles.createText}>Name your Cocktail</Text>
         <TextInput
           style={{height: 20}}
@@ -206,7 +212,7 @@ class CocktailCreatorScreen extends Component{
           backgroundColor='white'
         />
         {this.state.steps}
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: .25, flexDirection: 'row'}}>
           <Button
             onPress = {addStep}
             title="+"
