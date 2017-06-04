@@ -55,7 +55,7 @@ class AllCocktailsScreen extends Component{
   }
   render(){
     const onPressRow = () => {
-      this.props.navigation.navigate('CocktailDetail', { cocktail: 'Whiskey' })
+      this.props.navigation.navigate('CocktailDetail', { cocktail: cocktailnames[0] })
     }
     const { navigate } = this.props.navigation;
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -75,7 +75,7 @@ class AllCocktailsScreen extends Component{
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
             <TouchableHighlight onPress={onPressRow}>
-              <Text>{rowData}</Text>
+              <Text style={{padding: 5}}>{rowData}</Text>
             </TouchableHighlight>
           }
         />
