@@ -10,6 +10,7 @@ import {
   AppRegistry,
   Text,
   Button,
+  ScrollView,
   View,
   Picker,
   StyleSheet,
@@ -166,68 +167,70 @@ class CocktailCreatorScreen extends Component{
     }
     return(
       <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal'}}>
-        <Text style = {styles.createText}>Name your Cocktail</Text>
-        <TextInput
-          style={{height: 20}}
-          placeholder="Name"
-          placeholderTextColor='black'
-          backgroundColor='white'
-        />
-        <Text style = {styles.createText}>What family?</Text>
-        <Picker
-          style={{backgroundColor: 'white'}}
-          selectedValue={this.state.types}
-          onValueChange={(type) => this.setState({types: type})}>
-          <Picker.Item label="whiskey" value="key0" />
-          <Picker.Item label="vodka" value="key1" />
-          <Picker.Item label="gin" value="key2" />
-          <Picker.Item label="rum" value="key3" />
-          <Picker.Item label="other" value="key4" />
-        </Picker>
-        <Text style = {styles.createText}>List the ingredients</Text>
-        <TextInput
-          style={{height: 20}}
-          placeholder="Add ingredient"
-          placeholderTextColor='black'
-          backgroundColor='white'
-        />
-        {this.state.ingredients}
-        <View style={{flex: .25, flexDirection: 'row'}}>
+        <ScrollView>
+          <Text style = {styles.createText}>Name your Cocktail</Text>
+          <TextInput
+            style={{height: 20}}
+            placeholder="Name"
+            placeholderTextColor='black'
+            backgroundColor='white'
+          />
+          <Text style = {styles.createText}>What family?</Text>
+          <Picker
+            style={{backgroundColor: 'white'}}
+            selectedValue={this.state.types}
+            onValueChange={(type) => this.setState({types: type})}>
+            <Picker.Item label="whiskey" value="key0" />
+            <Picker.Item label="vodka" value="key1" />
+            <Picker.Item label="gin" value="key2" />
+            <Picker.Item label="rum" value="key3" />
+            <Picker.Item label="other" value="key4" />
+          </Picker>
+          <Text style = {styles.createText}>List the ingredients</Text>
+          <TextInput
+            style={{height: 20}}
+            placeholder="Add ingredient"
+            placeholderTextColor='black'
+            backgroundColor='white'
+          />
+          {this.state.ingredients}
+          <View style={{flex: .25, flexDirection: 'row'}}>
+            <Button
+              onPress = {addIng}
+              title="+"
+              color="black"
+            />
+            <Button
+              onPress = {removeIng}
+              title="-"
+              color="black"
+            />
+          </View>
+          <Text style = {styles.createText}>Steps in your recipe</Text>
+          <TextInput
+            style={{height: 20}}
+            placeholder="Add step"
+            placeholderTextColor='black'
+            backgroundColor='white'
+          />
+          {this.state.steps}
+          <View style={{flex: .25, flexDirection: 'row'}}>
+            <Button
+              onPress = {addStep}
+              title="+"
+              color="black"
+            />
+            <Button
+              onPress = {removeStep}
+              title="-"
+              color="black"
+            />
+          </View>
           <Button
-            onPress = {addIng}
-            title="+"
+            title="Finish"
             color="black"
           />
-          <Button
-            onPress = {removeIng}
-            title="-"
-            color="black"
-          />
-        </View>
-        <Text style = {styles.createText}>Steps in your recipe</Text>
-        <TextInput
-          style={{height: 20}}
-          placeholder="Add step"
-          placeholderTextColor='black'
-          backgroundColor='white'
-        />
-        {this.state.steps}
-        <View style={{flex: .25, flexDirection: 'row'}}>
-          <Button
-            onPress = {addStep}
-            title="+"
-            color="black"
-          />
-          <Button
-            onPress = {removeStep}
-            title="-"
-            color="black"
-          />
-        </View>
-        <Button
-          title="Finish"
-          color="black"
-        />
+        </ScrollView>
       </View>
     );
   }
