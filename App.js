@@ -3,6 +3,9 @@ import {
   cocktailList,
   yourCocktailList,
   cocktailnames,
+  Cocktail,
+  yourCocktailnames,
+  YourCocktail,
 } from './cocktails.js';
 import React, { Component } from 'react';
 import { styles } from './styles.js';
@@ -88,15 +91,16 @@ class AllCocktailsScreen extends Component{
 class YourCocktailsScreen extends Component{
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([
-        yourCocktailList
-      ]),
-    };
   }
   render(){
+    const onPressRow = () => {
+      this.props.navigation.navigate('CocktailDetail', { cocktail: yourCocktailnames[0] })
+    }
     const { navigate } = this.props.navigation;
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(yourCocktailnames),
+    };
     return(
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
         <View style={{backgroundColor: 'white', padding: 10}}>
@@ -113,7 +117,11 @@ class YourCocktailsScreen extends Component{
         </View>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(rowData) => <Text>{rowData}</Text>}
+          renderRow={(rowData) =>
+            <TouchableHighlight onPress={onPressRow}>
+              <Text style={{padding: 5}}>{rowData}</Text>
+            </TouchableHighlight>
+          }
         />
       </View>
     );
@@ -130,6 +138,8 @@ class CocktailCreatorScreen extends Component{
       steps: [],
       types: [],
       mode: Picker.MODE_DIALOG,
+      name: '',
+      photo: '',
     };
   }
   render(){
@@ -137,6 +147,7 @@ class CocktailCreatorScreen extends Component{
       this.setState({ textIngNumber: this.state.textIngNumber += 1});
       this.state.ingredients.push(
         <TextInput
+          onChangeText={(ing) => this.setState({ingredients: ingredients.push(ing)})}
           key = {this.state.textIngNumber}
           style={{height: 20}}
           placeholder="Add ingredient"
@@ -165,11 +176,21 @@ class CocktailCreatorScreen extends Component{
       this.setState({ textStepNumber: this.state.textStepNumber -= 1});
       this.state.steps.pop();
     }
+    const makeCocktail = () => {
+      yourCocktailList.push(YourCocktail(
+        this.state.photo,
+        this.state.type,
+        this.state.name,
+        this.state.ingredients,
+        this.state.steps));
+      this.props.navigation.navigate('Your Cocktails');
+    }
     return(
       <View style = {{flex: 1, flexDirection: 'column', backgroundColor: 'teal'}}>
         <ScrollView>
           <Text style = {styles.createText}>Name your Cocktail</Text>
           <TextInput
+            onChangeText={(name) => this.setState({name: name})}
             style={{height: 20}}
             placeholder="Name"
             placeholderTextColor='black'
@@ -188,6 +209,7 @@ class CocktailCreatorScreen extends Component{
           </Picker>
           <Text style = {styles.createText}>List the ingredients</Text>
           <TextInput
+            onChangeText={(ing) => this.setState({ingredients: ingredients.push(ing)})}
             style={{height: 20}}
             placeholder="Add ingredient"
             placeholderTextColor='black'
@@ -208,6 +230,7 @@ class CocktailCreatorScreen extends Component{
           </View>
           <Text style = {styles.createText}>Steps in your recipe</Text>
           <TextInput
+            onChangeText={(step) => this.setState({steps: steps.push(step)})}
             style={{height: 20}}
             placeholder="Add step"
             placeholderTextColor='black'
@@ -227,6 +250,7 @@ class CocktailCreatorScreen extends Component{
             />
           </View>
           <Button
+            onPress = {makeCocktail}
             title="Finish"
             color="black"
           />
