@@ -1,8 +1,6 @@
-
 import {
   cocktailList,
   yourCocktailList,
-  cocktailnames,
   Cocktail,
   yourCocktailnames,
   YourCocktail,
@@ -58,13 +56,13 @@ class AllCocktailsScreen extends Component{
     super(props);
   }
   render(){
-    const onPressRow = () => {
-      this.props.navigation.navigate('CocktailDetail', { cocktail: cocktailnames[0] })
+    const onPressRow = (rowData) => {
+      this.props.navigation.navigate('CocktailDetail', { cocktail: rowData.name })
     }
     const { navigate } = this.props.navigation;
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(cocktailnames),
+      dataSource: ds.cloneWithRows(cocktailList),
     };
     return (
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'teal' }}>
@@ -79,7 +77,7 @@ class AllCocktailsScreen extends Component{
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
             <TouchableHighlight onPress={onPressRow}>
-              <Text style={{padding: 5}}>{rowData}</Text>
+              <Text style={{padding: 5}}>{rowData.name.toString()}</Text>
             </TouchableHighlight>
           }
         />
