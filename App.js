@@ -56,9 +56,6 @@ class AllCocktailsScreen extends Component{
     super(props);
   }
   render(){
-    const onPressRow = (rowData) => {
-      this.props.navigation.navigate('CocktailDetail', { cocktail: rowData.name })
-    }
     const { navigate } = this.props.navigation;
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
@@ -76,7 +73,7 @@ class AllCocktailsScreen extends Component{
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
-            <TouchableHighlight onPress={onPressRow}>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('CocktailDetail', { cocktail: rowData.name.toString() })}>
               <Text style={{padding: 5}}>{rowData.name.toString()}</Text>
             </TouchableHighlight>
           }
@@ -91,9 +88,6 @@ class YourCocktailsScreen extends Component{
     super(props);
   }
   render(){
-    const onPressRow = () => {
-      this.props.navigation.navigate('CocktailDetail', { cocktail: yourCocktailnames[0] })
-    }
     const { navigate } = this.props.navigation;
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
@@ -116,7 +110,7 @@ class YourCocktailsScreen extends Component{
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
-            <TouchableHighlight onPress={onPressRow}>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('CocktailDetail', { cocktail: rowData.toString() })}>
               <Text style={{padding: 5}}>{rowData}</Text>
             </TouchableHighlight>
           }
@@ -145,7 +139,7 @@ class CocktailCreatorScreen extends Component{
       this.setState({ textIngNumber: this.state.textIngNumber += 1});
       this.state.ingredients.push(
         <TextInput
-          onChangeText={(ing) => this.setState({ingredients: ingredients.push(ing)})}
+          onChangeText={(ing) => this.setState({ingredients: this.state.ingredients.push(ing)})}
           key = {this.state.textIngNumber}
           style={{height: 20}}
           placeholder="Add ingredient"
@@ -207,7 +201,7 @@ class CocktailCreatorScreen extends Component{
           </Picker>
           <Text style = {styles.createText}>List the ingredients</Text>
           <TextInput
-            onChangeText={(ing) => this.setState({ingredients: ingredients.push(ing)})}
+            onChangeText={(ing) => this.setState({ingredients: this.state.ingredients.push(ing)})}
             style={{height: 20}}
             placeholder="Add ingredient"
             placeholderTextColor='black'
@@ -228,7 +222,7 @@ class CocktailCreatorScreen extends Component{
           </View>
           <Text style = {styles.createText}>Steps in your recipe</Text>
           <TextInput
-            onChangeText={(step) => this.setState({steps: steps.push(step)})}
+            onChangeText={(step) => this.setState({steps: this.state.steps.push(step)})}
             style={{height: 20}}
             placeholder="Add step"
             placeholderTextColor='black'

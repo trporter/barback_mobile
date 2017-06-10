@@ -20,7 +20,7 @@ export function YourCocktail(photo, type, name, ing, steps){
   this.ing = ing;
   this.steps = steps;
   yourCocktailList.push(this);
-  yourCocktailnames.push(name)
+  yourCocktailnames.push(name);
 };
 
 var oldFashioned = new Cocktail(
